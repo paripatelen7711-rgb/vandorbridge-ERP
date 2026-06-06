@@ -1,0 +1,222 @@
+
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+.root{position:relative;min-height:600px;border-radius:16px;overflow:hidden;font-family:var(--font-sans);background:#050510;display:flex;align-items:stretch}
+canvas#c3d{position:absolute;inset:0;width:100%;height:100%}
+.left{flex:1;position:relative;z-index:2;padding:36px 32px;display:flex;flex-direction:column;justify-content:space-between}
+.brand{display:flex;align-items:center;gap:10px}
+.b-icon{width:36px;height:36px;border-radius:10px;border:0.5px solid rgba(99,179,237,0.4);background:rgba(99,179,237,0.1);display:flex;align-items:center;justify-content:center}
+.b-icon i{font-size:18px;color:#63b3ed}
+.b-name{font-size:15px;font-weight:500;color:#fff;letter-spacing:0.02em}
+.hero{position:relative}
+.hero h1{font-size:34px;font-weight:500;color:#fff;line-height:1.2;margin-bottom:14px}
+.hero h1 em{font-style:normal;color:#63b3ed}
+.hero p{font-size:13px;color:rgba(255,255,255,0.4);line-height:1.7;max-width:270px}
+.feat-list{display:flex;flex-direction:column;gap:9px;margin-top:22px}
+.feat{display:flex;align-items:center;gap:10px;font-size:12px;color:rgba(255,255,255,0.5)}
+.feat i{font-size:14px;color:#63b3ed;width:16px}
+.card{width:340px;position:relative;z-index:2;margin:24px;background:rgba(255,255,255,0.04);border:0.5px solid rgba(255,255,255,0.1);border-radius:20px;padding:32px 28px;display:flex;flex-direction:column;align-self:center}
+.card::before{content:'';position:absolute;inset:0;border-radius:20px;background:linear-gradient(135deg,rgba(99,179,237,0.06),rgba(159,122,234,0.04));pointer-events:none}
+.tabs{display:flex;gap:0;margin-bottom:26px;background:rgba(255,255,255,0.05);border-radius:10px;padding:3px}
+.tb{flex:1;padding:8px;text-align:center;font-size:12px;border-radius:8px;cursor:pointer;border:none;background:transparent;color:rgba(255,255,255,0.4);transition:all 0.2s}
+.tb.on{background:rgba(99,179,237,0.2);color:#90cdf4;border:0.5px solid rgba(99,179,237,0.3)}
+.sc{display:none}.sc.on{display:block}
+.sc-title{font-size:16px;font-weight:500;color:#fff;margin-bottom:3px}
+.sc-sub{font-size:12px;color:rgba(255,255,255,0.35);margin-bottom:20px}
+.lbl{font-size:10px;color:rgba(255,255,255,0.4);margin-bottom:5px;display:block;letter-spacing:0.06em;text-transform:uppercase}
+.inp{width:100%;padding:9px 12px;background:rgba(255,255,255,0.06);border:0.5px solid rgba(255,255,255,0.1);border-radius:8px;color:#fff;font-size:13px;outline:none;margin-bottom:12px;transition:all 0.2s}
+.inp::placeholder{color:rgba(255,255,255,0.2)}
+.inp:focus{border-color:rgba(99,179,237,0.6);background:rgba(99,179,237,0.08);box-shadow:0 0 0 3px rgba(99,179,237,0.08)}
+select.inp option{background:#0d0d2b;color:#fff}
+.pw-w{position:relative;margin-bottom:12px}
+.pw-w .inp{margin-bottom:0;padding-right:36px}
+.pw-w button{position:absolute;right:10px;top:50%;transform:translateY(-50%);background:none;border:none;cursor:pointer;color:rgba(255,255,255,0.3);font-size:14px;padding:0}
+.row2{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:0}
+.row2 .inp{margin-bottom:12px}
+.rg{display:grid;grid-template-columns:1fr 1fr;gap:6px;margin-bottom:14px}
+.rc{border:0.5px solid rgba(255,255,255,0.08);border-radius:8px;padding:8px 10px;cursor:pointer;transition:all 0.2s;background:rgba(255,255,255,0.03)}
+.rc:hover{background:rgba(99,179,237,0.08)}
+.rc.sel{border-color:rgba(99,179,237,0.5);background:rgba(99,179,237,0.1)}
+.rn{font-size:11px;font-weight:500;color:rgba(255,255,255,0.65);display:flex;align-items:center;gap:4px}
+.rn i{font-size:12px;color:rgba(99,179,237,0.6)}
+.rc.sel .rn{color:#90cdf4}.rc.sel .rn i{color:#63b3ed}
+.rd{font-size:10px;color:rgba(255,255,255,0.25);margin-top:2px}
+.btn{width:100%;padding:11px;background:linear-gradient(135deg,#2b6cb0,#553c9a);border:none;border-radius:8px;color:#fff;font-size:13px;font-weight:500;cursor:pointer;margin-top:2px;transition:opacity 0.2s;position:relative;overflow:hidden}
+.btn:hover{opacity:0.88}
+.btn::after{content:'';position:absolute;inset:0;background:linear-gradient(135deg,rgba(99,179,237,0.2),transparent);pointer-events:none}
+.link-r{text-align:center;margin-top:12px;font-size:12px;color:rgba(255,255,255,0.3)}
+.link-r a{color:#90cdf4;cursor:pointer}
+.fgt-r{text-align:right;margin-top:-6px;margin-bottom:12px}
+.fgt-r a{font-size:11px;color:rgba(99,179,237,0.7);cursor:pointer}
+.alert-ok{background:rgba(72,187,120,0.1);border:0.5px solid rgba(72,187,120,0.3);border-radius:8px;padding:9px 12px;font-size:12px;color:#9ae6b4;margin-bottom:12px;display:flex;align-items:center;gap:7px}
+</style>
+
+<h2 class="sr-only">3D particle field login page for ProcureERP</h2>
+
+<div class="root">
+  <canvas id="c3d"></canvas>
+
+  <div class="left">
+    <div class="brand">
+      <div class="b-icon"><i class="ti ti-building-warehouse" aria-hidden="true"></i></div>
+      <span class="b-name">ProcureERP</span>
+    </div>
+    <div class="hero">
+      <h1>Smart<br>procurement<br>starts <em>here.</em></h1>
+      <p>A modern ERP built for vendor relationships, purchase flows, and invoice management.</p>
+      <div class="feat-list">
+        <div class="feat"><i class="ti ti-truck" aria-hidden="true"></i> Vendor registration & RFQ</div>
+        <div class="feat"><i class="ti ti-git-compare" aria-hidden="true"></i> Quotation comparison engine</div>
+        <div class="feat"><i class="ti ti-checks" aria-hidden="true"></i> Multi-level approval workflows</div>
+        <div class="feat"><i class="ti ti-file-invoice" aria-hidden="true"></i> PO generation & email invoicing</div>
+        <div class="feat"><i class="ti ti-activity" aria-hidden="true"></i> Real-time procurement tracking</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="tabs">
+      <button class="tb on" onclick="goTab('login',this)">Sign in</button>
+      <button class="tb" onclick="goTab('signup',this)">Sign up</button>
+      <button class="tb" onclick="goTab('forgot',this)">Reset</button>
+    </div>
+
+    <div class="sc on" id="sc-login">
+      <div class="sc-title">Welcome back</div>
+      <div class="sc-sub">Sign in to continue</div>
+      <label class="lbl">Email</label>
+      <input class="inp" type="email" placeholder="you@company.com"/>
+      <label class="lbl">Password</label>
+      <div class="pw-w"><input class="inp" type="password" id="pw1" placeholder="Password"/><button onclick="tpw('pw1',this)" aria-label="show"><i class="ti ti-eye"></i></button></div>
+      <div class="fgt-r"><a onclick="goTab('forgot',document.querySelectorAll('.tb')[2])">Forgot password?</a></div>
+      <label class="lbl">Role</label>
+      <select class="inp"><option>Admin</option><option>Procurement Officer</option><option>Vendor</option><option>Approver</option></select>
+      <button class="btn" onclick="sendPrompt('I signed into ProcureERP. What should I do first as Procurement Officer?')">Sign in →</button>
+      <div class="link-r">No account? <a onclick="goTab('signup',document.querySelectorAll('.tb')[1])">Sign up</a></div>
+    </div>
+
+    <div class="sc" id="sc-signup">
+      <div class="sc-title">Create account</div>
+      <div class="sc-sub">Join your procurement team</div>
+      <div class="row2">
+        <div><label class="lbl">First name</label><input class="inp" placeholder="Raj"/></div>
+        <div><label class="lbl">Last name</label><input class="inp" placeholder="Patel"/></div>
+      </div>
+      <label class="lbl">Work email</label>
+      <input class="inp" type="email" placeholder="raj@company.com"/>
+      <label class="lbl">Organization</label>
+      <input class="inp" placeholder="Acme Corp"/>
+      <label class="lbl">Role</label>
+      <div class="rg">
+        <div class="rc sel" onclick="pr(this)"><div class="rn"><i class="ti ti-shield" aria-hidden="true"></i> Admin</div><div class="rd">Full access</div></div>
+        <div class="rc" onclick="pr(this)"><div class="rn"><i class="ti ti-clipboard-list" aria-hidden="true"></i> Procurement</div><div class="rd">RFQ · PO</div></div>
+        <div class="rc" onclick="pr(this)"><div class="rn"><i class="ti ti-truck" aria-hidden="true"></i> Vendor</div><div class="rd">Quotes</div></div>
+        <div class="rc" onclick="pr(this)"><div class="rn"><i class="ti ti-checks" aria-hidden="true"></i> Approver</div><div class="rd">Approve POs</div></div>
+      </div>
+      <label class="lbl">Password</label>
+      <div class="pw-w"><input class="inp" type="password" id="pw2" placeholder="Min. 8 chars"/><button onclick="tpw('pw2',this)" aria-label="show"><i class="ti ti-eye"></i></button></div>
+      <label class="lbl">Confirm</label>
+      <input class="inp" type="password" placeholder="Repeat password"/>
+      <button class="btn" onclick="sendPrompt('I registered as Vendor in ProcureERP. How do I submit a quotation?')">Create account →</button>
+      <div class="link-r">Have account? <a onclick="goTab('login',document.querySelectorAll('.tb')[0])">Sign in</a></div>
+    </div>
+
+    <div class="sc" id="sc-forgot">
+      <div class="sc-title">Reset password</div>
+      <div class="sc-sub">We'll email you a secure link</div>
+      <div id="ff">
+        <label class="lbl">Email</label>
+        <input class="inp" type="email" placeholder="you@company.com"/>
+        <label class="lbl">Role</label>
+        <select class="inp"><option>Admin</option><option>Procurement Officer</option><option>Vendor</option><option>Approver</option></select>
+        <button class="btn" onclick="doFgt()">Send reset link</button>
+      </div>
+      <div id="fs" style="display:none">
+        <div class="alert-ok"><i class="ti ti-circle-check" aria-hidden="true"></i> Reset link sent to your inbox.</div>
+        <div style="font-size:12px;color:rgba(255,255,255,0.3)">Didn't get it? <a style="color:#90cdf4;cursor:pointer" onclick="document.getElementById('fs').style.display='none';document.getElementById('ff').style.display='block'">Try again</a></div>
+      </div>
+      <div class="link-r" style="margin-top:16px"><a onclick="goTab('login',document.querySelectorAll('.tb')[0])">← Back to sign in</a></div>
+    </div>
+  </div>
+</div>
+
+<script>
+function goTab(n,b){document.querySelectorAll('.sc').forEach(s=>s.classList.remove('on'));document.querySelectorAll('.tb').forEach(t=>t.classList.remove('on'));document.getElementById('sc-'+n).classList.add('on');if(b)b.classList.add('on')}
+function pr(c){document.querySelectorAll('.rc').forEach(r=>r.classList.remove('sel'));c.classList.add('sel')}
+function tpw(id,b){const i=document.getElementById(id);const s=i.type==='text';i.type=s?'password':'text';b.innerHTML=s?'<i class="ti ti-eye"></i>':'<i class="ti ti-eye-off"></i>';}
+function doFgt(){document.getElementById('ff').style.display='none';document.getElementById('fs').style.display='block';}
+
+const cv=document.getElementById('c3d'),ctx=cv.getContext('2d');
+let W,H,pts=[],mouse={x:0,y:0};
+const N=90;
+
+function resize(){W=cv.width=cv.parentElement.offsetWidth;H=cv.height=cv.parentElement.offsetHeight;init();}
+
+function init(){
+  pts=[];
+  for(let i=0;i<N;i++){
+    pts.push({
+      x:Math.random()*W, y:Math.random()*H,
+      z:Math.random()*2+0.3,
+      vx:(Math.random()-0.5)*0.4,
+      vy:(Math.random()-0.5)*0.4,
+      r:Math.random()*1.8+0.5,
+      hue:Math.random()>0.6?210+Math.random()*40:260+Math.random()*30
+    });
+  }
+}
+
+function draw(){
+  ctx.clearRect(0,0,W,H);
+  ctx.fillStyle='#050510';
+  ctx.fillRect(0,0,W,H);
+
+  for(let i=0;i<pts.length;i++){
+    const p=pts[i];
+    p.x+=p.vx*p.z;
+    p.y+=p.vy*p.z;
+    if(p.x<0)p.x=W;if(p.x>W)p.x=0;
+    if(p.y<0)p.y=H;if(p.y>H)p.y=0;
+
+    const dx=mouse.x-p.x,dy=mouse.y-p.y;
+    const dist=Math.sqrt(dx*dx+dy*dy);
+    if(dist<120){
+      p.x-=dx*0.012;
+      p.y-=dy*0.012;
+    }
+
+    for(let j=i+1;j<pts.length;j++){
+      const q=pts[j];
+      const ex=p.x-q.x,ey=p.y-q.y;
+      const d=Math.sqrt(ex*ex+ey*ey);
+      if(d<110){
+        const op=(1-d/110)*0.35;
+        ctx.beginPath();
+        ctx.moveTo(p.x,p.y);
+        ctx.lineTo(q.x,q.y);
+        ctx.strokeStyle=`hsla(${(p.hue+q.hue)/2},80%,70%,${op})`;
+        ctx.lineWidth=0.5;
+        ctx.stroke();
+      }
+    }
+
+    ctx.beginPath();
+    ctx.arc(p.x,p.y,p.r*p.z,0,Math.PI*2);
+    ctx.fillStyle=`hsla(${p.hue},85%,75%,0.9)`;
+    ctx.fill();
+
+    if(p.r*p.z>1.5){
+      ctx.beginPath();
+      ctx.arc(p.x,p.y,p.r*p.z*3,0,Math.PI*2);
+      ctx.fillStyle=`hsla(${p.hue},80%,65%,0.04)`;
+      ctx.fill();
+    }
+  }
+  requestAnimationFrame(draw);
+}
+
+cv.addEventListener('mousemove',e=>{const r=cv.getBoundingClientRect();mouse.x=e.clientX-r.left;mouse.y=e.clientY-r.top;});
+window.addEventListener('resize',resize);
+resize();
+draw();
+</script>
