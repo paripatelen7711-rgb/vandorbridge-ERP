@@ -1,0 +1,2 @@
+# vandorbridge-ERP
+A full-featured ERP module built to streamline organizational procurement workflows. The system enables vendor registration, RFQ creation, quotation comparison, multi-level approval processing, and automated purchase order generation. It supports end-to-end invoice management including generation, printing, and email delivery — all within a secure, modular architecture and intuitive UI designed for real-world procurement operations. 
